@@ -29,6 +29,16 @@ public class AssetManagerApp {
 				case 2:	// 一覧表示
 					ui.showAssetList(service.getAssetList(), service.getTotalBalance());
 					break;
+				case 3:	//削除
+					ui.showAssetList(service.getAssetList(), service.getTotalBalance());
+
+					// 何番を消すか聞く
+                    int deleteIndex = ui.askUserForDeleteIndex();
+
+					// 削除実行
+                    service.deleteAsset(deleteIndex);
+                    System.out.println(">> 削除処理が完了しました。");
+                    break;
 				case 9:	// 終了
 					System.out.println("システムを終了します。お疲れさまでした！");
 					ui.close();

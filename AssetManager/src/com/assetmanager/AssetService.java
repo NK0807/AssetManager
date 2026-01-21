@@ -28,4 +28,14 @@ public class AssetService {
     public List<Asset> getAssetList(){
         return assetList;
     }
+
+    // 指定された番号の資産をリストから削除する
+    public void deleteAsset(int index){
+        // 番号が正しいかチェック
+        if(index >= 0 && index < assetList.size()){
+            assetList.remove(index);
+        } else{
+            System.out.println("エラー：存在しない番号です。");
+        }
+    }
 }

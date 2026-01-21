@@ -37,8 +37,9 @@ public class ConsoleUI {
     // 登録された資産を表示する
     public void showAssetList(List<Asset> assetList, int totalbalance){
 		System.out.println("----- 資産一覧 -----");
-		for(Asset a : assetList){
-			System.out.println(a.getName() + "：" + a.getBalance() + "円（" + a.getType() + "）");
+		for(int i = 0; i < assetList.size(); i++){
+            Asset a = assetList.get(i);
+			System.out.println(i + ". " + a.getName() + ": " + a.getBalance() + "円 (" + a.getType() + ")");
 		}
 
 		// 合計金額を表示する
@@ -46,11 +47,23 @@ public class ConsoleUI {
 		System.out.println("資産合計：" + totalbalance + "円");
     }
 
+    // 削除したい資産の番号を聞く
+    public int askUserForDeleteIndex(){
+        System.out.println("削除する資産の番号を入力してください：");
+        try{
+            String input = scanner.nextLine();
+            return Integer.parseInt(input);
+        } catch(NumberFormatException e){
+            return -1;
+        }
+    }
+
     // メニューを表示して、ユーザーが選んだ番号を返す
     public int showMenu(){
         System.out.println("\n---------- メニュー ----------");
         System.out.println("1. 資産を登録する");
         System.out.println("2. 資産一覧を見る");
+        System.out.println("3. 資産を削除する");
         System.out.println("9. アプリを終了する");
         System.out.println("-----------------------------");
         System.out.print("番号を入力してください > ");
