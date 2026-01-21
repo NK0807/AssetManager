@@ -1,15 +1,22 @@
 package com.assetmanager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AssetService {
-    // 複数の資産を入れておくリスト
-    private List<Asset> assetList = new ArrayList<>();
+    private List<Asset> assetList;
+    private FileRepository repository;
+
+    public AssetService(){
+        this.repository = new FileRepository();
+        //起動時に読み込む
+        this.assetList = repository.loadFromFile();
+    } 
 
     // 資産を追加するメソッド
     public void addAsset(Asset asset){
         assetList.add(asset);
+        // 変更したら保存
+        repository.saveToFile(assetList);
     }
 
     // 登録されている全ての資産の合計金額を計算するメソッド
@@ -34,6 +41,8 @@ public class AssetService {
         // 番号が正しいかチェック
         if(index >= 0 && index < assetList.size()){
             assetList.remove(index);
+            // 削除後も保存
+            repository.saveToFile(assetList);
         } else{
             System.out.println("エラー：存在しない番号です。");
         }
