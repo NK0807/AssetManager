@@ -5,22 +5,26 @@ public class AssetManagerApp {
 		// 動作確認用
 		System.out.println("資産アプリを起動します。");
 		
-		// サービスを用意する
+		// サービスとスキャナーを用意する
 		AssetService service = new AssetService();
+		ConsoleUI ui = new ConsoleUI();
 
-		// 資産を作って、サービスに登録する
-		service.addAsset(new Asset("Java銀行", 50000, "銀行"));
-		service.addAsset(new Asset("自分の財布", 3000, "現金"));
-		service.addAsset(new Asset("へそくり", 10000, "現金"));
+		// 入力処理
+		Asset newAsset = ui.askUserForAsset();
 
-		// 登録された資産を表示する
-		System.out.println("----- 資産一覧 -----");
-		for(Asset a : service.getAssetList()){
-			System.out.println(a.getName() + "：" + a.getBalance() + "円");
+		// 登録処理
+		if(newAsset != null){
+			//入力された情報でAssetを作成して登録
+			service.addAsset(newAsset);
+			System.out.println(">> " + newAsset.getName() + "を登録しました！");
+		} else{
+			System.out.println(">> 登録をスキップしました。");
 		}
 
-		// 合計金額を表示する
-		System.out.println("-------------------");
-		System.out.println("資産合計：" + service.getTotalBalance() + "円");
+		// 表示処理
+		ui.showAssetList(service.getAssetList(), service.getTotalBalance());
+
+		// 後始末
+        ui.close();
 	}
 }
